@@ -76,6 +76,7 @@ mcp__airtable__create_record
     Priority Score: [score if known]
     Status: In Production
     Client: [client record ID]
+    Client Tag: [client short name - matches Content Pieces mapping]
 ```
 
 ### Step 5: Create Content Piece Records
@@ -96,7 +97,17 @@ mcp__airtable__create_record
     Hashtags: [tags]
     Topic: [topic record ID]
     Client: [client record ID]
+    Client Tag: [client short name - e.g., "Zach Lloyd" or "Stephanie Jones"]
 ```
+
+**Client Tag Mapping:**
+| Client Name | Client Tag Value |
+|-------------|------------------|
+| Zach Lloyd Coaching | Zach Lloyd |
+| Stephanie Jones | Stephanie Jones |
+| [New Client] | [Add to AAA Content Pieces field options first] |
+
+> **Important:** When adding a new client, first add their name as a new option to the "Client Tag" single-select field in both AAA Content Pieces and AAA Topics tables.
 
 ### Step 6: Confirm Success
 Report:
@@ -121,6 +132,8 @@ Report:
 
 **Status Options:** Draft, Review, Approved, Scheduled, Published
 
+**Client Tag Options:** Zach Lloyd (green), Stephanie Jones (purple), [Add new clients as needed]
+
 ## Example Usage
 
 **User:** "Push the Digital Sabbath content we just generated to Airtable for Stephanie"
@@ -141,6 +154,8 @@ Report:
 4. Extract Hook from first sentence if not explicit
 5. Extract CTA from last sentence if not explicit
 6. Use descriptive Content Title: "[Topic] - [Platform] [Type]"
+7. **Always set Client Tag** for visual differentiation in Airtable views
+8. **New clients:** Add their name as a Client Tag option in Airtable before first content push
 
 ## Next Steps
 After pushing content:
