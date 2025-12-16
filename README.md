@@ -157,6 +157,27 @@ Airtable (Status: Approved) → Webhook → n8n → Kit Draft → Airtable (Publ
 - WordPress → WP REST API (bring credentials)
 - LinkedIn → LinkedIn API (bring token)
 
+## Extraction Tools
+
+The `tools/extraction/` folder contains Python scripts for gathering content:
+
+| Tool | Purpose |
+|------|---------|
+| `youtube_transcript_extractor.py` | Download YouTube video transcripts |
+| `kit_email_extractor.py` | Extract Kit (ConvertKit) email broadcasts |
+| `podcast_transcript_extractor.py` | Get podcast transcripts from Buzzsprout |
+| `gemini_voice_synthesizer.py` | Analyze 500k+ tokens with Gemini 2.5 |
+
+**For Twitter/X:** See `tools/extraction/README.md` for alternatives (API is paid).
+
+**Quick start:**
+```bash
+pip install youtube-transcript-api requests beautifulsoup4
+python tools/extraction/youtube_transcript_extractor.py
+```
+
+See `tools/extraction/README.md` for complete AI-friendly usage instructions.
+
 ## Requirements
 
 - **Claude Code** - This system runs in Claude Code
