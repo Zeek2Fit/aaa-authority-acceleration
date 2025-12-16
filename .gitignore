@@ -1,0 +1,33 @@
+# Environment and secrets
+.env
+.env.local
+*.local.md
+CLAUDE.local.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Client data (never commit)
+clients/
+output/
+
+# Node
+node_modules/
+
+# Logs
+*.log
