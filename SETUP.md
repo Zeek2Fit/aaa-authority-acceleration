@@ -15,7 +15,7 @@ Before installing the AAA system, ensure you have:
 
 ```bash
 # Clone or download this repository
-git clone https://github.com/blacksheepsystems/aaa-authority-acceleration.git
+git clone https://github.com/Zeek2Fit/aaa-authority-acceleration.git
 cd aaa-authority-acceleration
 
 # Copy skills to your Claude Code environment
@@ -29,9 +29,13 @@ Open Claude Code and run:
 
 ```bash
 ls ~/.claude/skills/
+# Should show 23+ skill directories
+
+ls ~/.claude/commands/
+# Should show 23 command files
 ```
 
-You should see 23 skill directories plus `skill-rules.json`.
+Type `/aaa` and press Tab to see available commands.
 
 ### Step 3: Configure Airtable
 
@@ -65,6 +69,7 @@ In Airtable, create a new base with these tables:
 | Priority Score | Number |
 | Status | Single select |
 | Client | Link to AAA Clients |
+| Client Tag | Single select (for visual filtering by client) |
 
 **Table 3: AAA Content Pieces**
 | Field | Type |
@@ -81,6 +86,7 @@ In Airtable, create a new base with these tables:
 | Hashtags | Single line text |
 | Topic | Link to AAA Topics |
 | Client | Link to AAA Clients |
+| Client Tag | Single select (for visual filtering by client) |
 
 #### Get Your Base ID
 

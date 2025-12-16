@@ -35,20 +35,29 @@ Most AI content fails because:
 
 ## Quick Start
 
-### 1. Install Skills
-
-Copy the `.claude/skills/` folder to your Claude Code environment:
+### 1. Clone & Install
 
 ```bash
-cp -r .claude/skills/ ~/.claude/skills/
+# Clone the repository
+git clone https://github.com/Zeek2Fit/aaa-authority-acceleration.git
+cd aaa-authority-acceleration
+
+# Copy skills and commands to your Claude Code environment
+cp -r .claude/skills/* ~/.claude/skills/
+cp -r .claude/commands/* ~/.claude/commands/
 ```
 
 ### 2. Verify Installation
 
 ```bash
 ls ~/.claude/skills/
-# Should show 23 skill directories + skill-rules.json
+# Should show 23+ skill directories
+
+ls ~/.claude/commands/
+# Should show 23 command files (aaa-workflow.md, brand-discovery.md, etc.)
 ```
+
+> **Tip:** After installation, type `/aaa` and press Tab - Claude Code will autocomplete available AAA commands.
 
 ### 3. Run Your First Workflow
 
