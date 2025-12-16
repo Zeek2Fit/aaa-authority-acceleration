@@ -1,0 +1,256 @@
+{
+  "version": "1.0",
+  "description": "AAA Authority Acceleration System - Skill auto-activation triggers",
+  "skills": {
+    "brand-discovery": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Strategic brand interview - 39 questions",
+      "promptTriggers": {
+        "keywords": ["brand", "positioning", "audience", "niche", "target market", "ideal client", "who do you serve", "brand strategy", "brand identity"],
+        "intentPatterns": ["(define|discover|analyze|understand).*brand", "(who|what).*audience", "help.*brand", "my.*brand"]
+      }
+    },
+    "generate-topics": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Generate 50-100 content topics from brand profile",
+      "promptTriggers": {
+        "keywords": ["topics", "content ideas", "what to write", "what to post", "content pillars", "blog ideas", "video ideas"],
+        "intentPatterns": ["(generate|create|find|brainstorm).*topics", "what.*(write|post|create).*about", "need.*content.*ideas"]
+      }
+    },
+    "topic-to-matrix": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Expand one topic into 19 pieces of multi-platform content",
+      "promptTriggers": {
+        "keywords": ["content matrix", "repurpose", "multi-platform", "expand topic", "atomize", "one topic", "content explosion"],
+        "intentPatterns": ["(expand|turn|convert).*topic", "repurpose.*content", "one.*topic.*into", "atomize.*content"]
+      }
+    },
+    "authority-engine": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "STP analysis + competitor discovery via Perplexity",
+      "promptTriggers": {
+        "keywords": ["authority", "competitors", "positioning", "STP", "perceptual map", "market analysis", "competitive analysis", "market position"],
+        "intentPatterns": ["(analyze|find|discover).*competitors", "position.*market", "who.*competitors", "competitive.*landscape"]
+      }
+    },
+    "competitor-analysis": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Orchestrator for competitor content analysis",
+      "promptTriggers": {
+        "keywords": ["competitor analysis", "analyze competitor", "what are they doing", "competitor content", "competitor strategy"],
+        "intentPatterns": ["analyze.*competitor.*content", "what.*competitors.*doing", "study.*competitor"]
+      }
+    },
+    "competitor-hooks": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Extract viral hooks from competitor content",
+      "promptTriggers": {
+        "keywords": ["viral hooks", "opening lines", "attention grabbers", "hook formulas", "scroll-stopping"],
+        "intentPatterns": ["extract.*hooks", "find.*viral", "best.*hooks", "hook.*patterns"]
+      }
+    },
+    "competitor-structures": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Identify winning content formats and structures",
+      "promptTriggers": {
+        "keywords": ["content formats", "structures", "listicles", "frameworks", "content templates", "post formats"],
+        "intentPatterns": ["identify.*formats", "content.*structures", "what.*format.*works"]
+      }
+    },
+    "competitor-topics": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Find high-engagement topics from competitors",
+      "promptTriggers": {
+        "keywords": ["engagement topics", "what topics", "high-performing", "trending topics", "popular topics"],
+        "intentPatterns": ["find.*engaging.*topics", "what.*topics.*work", "topics.*perform"]
+      }
+    },
+    "competitor-gaps": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Find white space and content gaps in market",
+      "promptTriggers": {
+        "keywords": ["white space", "gaps", "opportunities", "underserved", "content gaps", "market gaps", "blue ocean"],
+        "intentPatterns": ["find.*gaps", "where.*competitors.*weak", "what.*missing", "opportunity.*market"]
+      }
+    },
+    "trust-signal-generator": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "E-E-A-T aligned trust signal orchestrator",
+      "promptTriggers": {
+        "keywords": ["trust signals", "E-E-A-T", "authority content", "credibility", "trust building", "expertise signals"],
+        "intentPatterns": ["build.*trust", "generate.*authority", "E-?E-?A-?T", "establish.*credibility"]
+      }
+    },
+    "trust-case-studies": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Transform client results into compelling case studies",
+      "promptTriggers": {
+        "keywords": ["case study", "client results", "success story", "testimonial", "client transformation", "before after"],
+        "intentPatterns": ["create.*case study", "document.*results", "client.*story", "success.*story"]
+      }
+    },
+    "trust-frameworks": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create proprietary frameworks and methodologies",
+      "promptTriggers": {
+        "keywords": ["proprietary framework", "methodology", "system", "process", "signature framework", "branded method"],
+        "intentPatterns": ["create.*framework", "name.*methodology", "develop.*system", "proprietary.*process"]
+      }
+    },
+    "trust-contrarian": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Generate thought leadership contrarian takes",
+      "promptTriggers": {
+        "keywords": ["contrarian", "hot take", "unpopular opinion", "thought leadership", "challenge conventional", "myth busting"],
+        "intentPatterns": ["contrarian.*take", "challenge.*assumption", "unpopular.*opinion", "hot.*take"]
+      }
+    },
+    "trust-metrics": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create transparent metrics and open dashboards",
+      "promptTriggers": {
+        "keywords": ["open metrics", "transparency", "behind the scenes", "numbers", "public dashboard", "real numbers"],
+        "intentPatterns": ["share.*metrics", "show.*numbers", "transparent.*results", "open.*dashboard"]
+      }
+    },
+    "trust-deep-dives": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Create comprehensive long-form authority content",
+      "promptTriggers": {
+        "keywords": ["deep dive", "long-form", "comprehensive", "ultimate guide", "complete guide", "definitive guide"],
+        "intentPatterns": ["deep.*dive", "long.*form.*authority", "comprehensive.*guide", "ultimate.*guide"]
+      }
+    },
+    "trust-provenance": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "medium",
+      "description": "Show methodology transparency and creation process",
+      "promptTriggers": {
+        "keywords": ["provenance", "methodology transparency", "how I create", "behind the scenes", "my process", "how it's made"],
+        "intentPatterns": ["show.*process", "methodology.*transparency", "how.*create", "behind.*scenes"]
+      }
+    },
+    "voice-dna": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Extract authentic voice patterns from writing samples (5-layer analysis)",
+      "promptTriggers": {
+        "keywords": ["voice", "voice DNA", "voice profile", "writing style", "voice patterns", "how I write", "my voice", "capture voice", "voice analysis", "authentic voice"],
+        "intentPatterns": ["(analyze|extract|capture|understand).*voice", "how.*write", "voice.*patterns", "writing.*style", "voice.*profile"]
+      }
+    },
+    "disgust-mapper": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Capture what you would NEVER say (negative AI training)",
+      "promptTriggers": {
+        "keywords": ["disgust", "never say", "would never", "hate", "cringe", "boundaries", "guardrails", "anti-patterns", "avoid saying", "voice boundaries"],
+        "intentPatterns": ["(what|things).*never.*say", "voice.*boundaries", "disgust.*map", "avoid.*patterns", "cringe.*content"]
+      }
+    },
+    "browser-automation-stagehand": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "AI-native browser automation with Stage Hand (scraping, forms, workflows)",
+      "promptTriggers": {
+        "keywords": ["browser", "automation", "scrape", "scraping", "web scraping", "form filling", "headless", "browser automation", "stagehand", "stage hand", "web automation", "crawl", "spider", "extract data", "selenium", "puppeteer", "playwright"],
+        "intentPatterns": ["(automate|control|open).*browser", "(scrape|extract).*data", "fill.*form", "(web|browser).*automation", "headless.*browser", "interact.*website", "navigate.*page"]
+      }
+    },
+    "aaa-workflow": {
+      "type": "orchestrator",
+      "enforcement": "suggest",
+      "priority": "critical",
+      "description": "Complete AAA Framework journey - new client orchestration",
+      "promptTriggers": {
+        "keywords": ["new client", "AAA framework", "start AAA", "run AAA", "begin AAA", "AAA workflow", "authority acceleration", "full workflow", "complete workflow", "client onboarding"],
+        "intentPatterns": ["(have|got|starting).*new.*client", "(run|start|begin|do).*AAA", "where.*start.*client", "onboard.*client", "full.*AAA.*process"]
+      }
+    },
+    "deep-brand-intake": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Capture raw content samples before Voice DNA analysis",
+      "promptTriggers": {
+        "keywords": ["capture content", "gather samples", "extract content", "client content", "digital footprint", "collect writing", "content samples", "raw content", "intake", "brand intake"],
+        "intentPatterns": ["(capture|gather|collect|get).*content", "(need|want).*samples", "extract.*writing", "digital.*footprint", "before.*voice.*dna", "how.*get.*samples"]
+      }
+    },
+    "content-to-airtable": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Push generated content to Airtable Content Engine",
+      "promptTriggers": {
+        "keywords": ["push to airtable", "save to airtable", "add to queue", "content queue", "store content", "airtable", "save content", "export to airtable"],
+        "intentPatterns": ["(push|save|add|export).*airtable", "(store|put).*content.*queue", "send.*to.*airtable", "content.*to.*airtable"]
+      }
+    },
+    "content-calendar": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Bulk generate weeks/months of content with scheduling",
+      "promptTriggers": {
+        "keywords": ["content calendar", "schedule content", "month of content", "week of content", "bulk content", "content plan", "posting schedule", "editorial calendar"],
+        "intentPatterns": ["(generate|create|build).*calendar", "(week|month).*of.*content", "schedule.*(posts|content)", "bulk.*content", "content.*schedule"]
+      }
+    },
+    "content-review": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Review, edit, and approve content before scheduling",
+      "promptTriggers": {
+        "keywords": ["review content", "approve content", "check queue", "content review", "review queue", "approve posts", "edit content", "content approval"],
+        "intentPatterns": ["review.*(content|queue|posts)", "approve.*(content|posts)", "check.*queue", "edit.*before.*post", "content.*approval"]
+      }
+    },
+    "session-handoff": {
+      "type": "utility",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Update progress files and generate resume prompt for context reset",
+      "promptTriggers": {
+        "keywords": ["progress next", "session handoff", "context reset", "prepare handoff", "end session", "reset context", "handoff", "wrap up session"],
+        "intentPatterns": ["(progress|update).*next", "(end|wrap|close).*session", "(reset|clear).*context", "prepare.*handoff", "ready.*reset"]
+      }
+    }
+  }
+}

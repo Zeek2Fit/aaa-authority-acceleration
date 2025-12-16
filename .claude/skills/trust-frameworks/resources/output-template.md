@@ -1,0 +1,79 @@
+# Framework Output Template
+
+```
+## FRAMEWORK: [NAME]
+
+**Type:** [Acronym/Numbered/Matrix/etc.]
+**Gap It Fills:** [From competitor analysis]
+**Why Needed:** [Problem it solves]
+
+---
+
+### THE FRAMEWORK
+
+[Visual representation based on type]
+
+For ACRONYM:
+[F]irst component
+[R]andom second
+[A]nother third
+[M]ore fourth
+[E]nd fifth
+
+For NUMBERED:
+1. [Step Name]
+2. [Step Name]
+3. [Step Name]
+
+For MATRIX:
+           | [Dimension A High] | [Dimension A Low] |
+[Dim B Hi] | [Quadrant 1]       | [Quadrant 2]      |
+[Dim B Lo] | [Quadrant 3]       | [Quadrant 4]      |
+
+---
+
+### COMPONENT BREAKDOWN
+
+**Component 1: [NAME]**
+- What it is: [Definition]
+- Why it matters: [Importance]
+- How to apply: [Action steps]
+- Common mistake: [What to avoid]
+
+**Component 2: [NAME]**
+...
+
+---
+
+### WHY THIS WORKS
+[Your unique insight - what competitors miss]
+
+---
+
+### CONTENT SPIN-OFFS
+
+**Pillar Content:**
+- Blog post: "[Title]: The Complete Guide to [Framework]"
+- YouTube: "The [Framework] Explained in [X] Minutes"
+
+**Social Content:**
+- Twitter thread: "The [Framework] changed how I think about [topic]..."
+- LinkedIn post: "After [X] years, I've developed the [Framework]..."
+- Instagram carousel: [X] slides, one per component
+
+**Email Content:**
+- Welcome sequence: [X] emails, one per component
+- Newsletter: "How to use the [Framework] for [specific use case]"
+
+---
+
+### TEACHING SCRIPT
+
+"So the way I think about [topic] is through my [Framework]. Basically, [simple explanation].
+
+The first part is [Component 1], which means [explanation]. Then [Component 2]...
+
+Most people skip [commonly missed component], but that's actually where [key insight].
+
+When you put it all together, you get [result]."
+```
