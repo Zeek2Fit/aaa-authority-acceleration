@@ -1,0 +1,292 @@
+{
+  "name": "AAA Content Publisher",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "aaa-publish",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [0, 0],
+      "id": "webhook-trigger",
+      "name": "AAA Webhook",
+      "webhookId": "aaa-publish-webhook"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_CONTENT_TABLE_ID",
+          "mode": "id"
+        },
+        "filterByFormula": "{Status}='Approved'",
+        "options": {}
+      },
+      "id": "airtable-get",
+      "name": "Get Approved Content",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [224, 0],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Airtable Personal Access Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "leftValue": "={{ $json.Platform }}",
+              "rightValue": "Email",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "if-email",
+      "name": "Is Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [448, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {"id": "platform", "name": "platform", "value": "={{ $json.Platform }}", "type": "string"},
+            {"id": "title", "name": "title", "value": "={{ $json['Content Title'] }}", "type": "string"},
+            {"id": "content", "name": "content", "value": "={{ $json.Content }}", "type": "string"},
+            {"id": "record_id", "name": "record_id", "value": "={{ $json.id }}", "type": "string"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "email-prep",
+      "name": "Prep Email Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [672, -96]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Convert Markdown to HTML for Kit email\nlet content = $input.first().json.content;\nlet title = $input.first().json.title;\n\n// Extract subject line from content if present\nlet subject = title;\nconst subjectMatch = content.match(/^Subject:\\s*(.+?)\\n/i);\nif (subjectMatch) {\n  subject = subjectMatch[1].trim();\n}\n\n// Strip \"Subject:\" line from beginning\ncontent = content.replace(/^Subject:.*\\n+---\\n+/i, '');\ncontent = content.replace(/^Subject:.*\\n+/i, '');\n\nlet html = content\n  .replace(/\\*\\*([^*]+)\\*\\*/g, '<strong>$1</strong>')\n  .replace(/^---$/gm, '<hr>')\n  .replace(/^[\\u2022]\\s+(.+)$/gm, '<li>$1</li>')\n  .replace(/(<li>.*<\\/li>\\n?)+/g, '<ul>$&</ul>')\n  .replace(/\\n\\n/g, '</p><p>')\n  .replace(/\\n/g, '<br>')\n  .replace(/^/, '<p>')\n  .replace(/$/, '</p>')\n  .replace(/<p><\\/p>/g, '')\n  .replace(/<p><hr><\\/p>/g, '<hr>')\n  .replace(/<p><ul>/g, '<ul>')\n  .replace(/<\\/ul><\\/p>/g, '</ul>');\n\nreturn {\n  json: {\n    ...$input.first().json,\n    subject: subject,\n    content: html\n  }\n};"
+      },
+      "id": "convert-to-html",
+      "name": "Convert to HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [784, -96]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kit.com/v4/broadcasts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-Kit-Api-Key", "value": "YOUR_KIT_API_KEY"}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "subject", "value": "={{ $json.subject }}"},
+            {"name": "content", "value": "={{ $json.content }}"},
+            {"name": "description", "value": "Created via AAA Pipeline"},
+            {"name": "public", "value": "={{false}}"},
+            {"name": "published_at", "value": "={{ $now.toISO() }}"},
+            {"name": "send_at", "value": "={{null}}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "kit-create-draft",
+      "name": "Create Kit Draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [976, -96]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {"id": "id", "name": "id", "value": "={{ $('Prep Email Data').item.json.record_id }}", "type": "string"},
+            {"id": "kit_broadcast_id", "name": "kit_broadcast_id", "value": "={{ $json.broadcast.id }}", "type": "number"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "merge-record-id",
+      "name": "Add Record ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1184, -96]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/YOUR_BASE_ID/YOUR_TABLE_ID/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Bearer YOUR_AIRTABLE_PAT"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"fields\": { \"Status\": \"Published\" } }",
+        "options": {}
+      },
+      "id": "http-airtable-update",
+      "name": "Mark Email Published",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1376, -96]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {"id": "platform", "name": "platform", "value": "={{ $json.Platform }}", "type": "string"},
+            {"id": "title", "name": "title", "value": "={{ $json['Content Title'] }}", "type": "string"},
+            {"id": "content", "name": "content", "value": "={{ $json.Content }}", "type": "string"},
+            {"id": "record_id", "name": "record_id", "value": "={{ $json.id }}", "type": "string"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "other-prep",
+      "name": "Prep Other Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [560, 352]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [{"leftValue": "={{ $json.platform }}", "rightValue": "Twitter", "operator": {"type": "string", "operation": "equals"}}],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Twitter"
+            },
+            {
+              "conditions": {
+                "conditions": [{"leftValue": "={{ $json.platform }}", "rightValue": "WordPress", "operator": {"type": "string", "operation": "equals"}}],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "WordPress"
+            },
+            {
+              "conditions": {
+                "conditions": [{"leftValue": "={{ $json.platform }}", "rightValue": "LinkedIn", "operator": {"type": "string", "operation": "equals"}}],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LinkedIn"
+            }
+          ]
+        },
+        "options": {"fallbackOutput": "extra"}
+      },
+      "id": "switch-platform",
+      "name": "Route by Platform",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [704, 496]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "sendHeaders": true,
+        "headerParameters": {"parameters": [{"name": "Authorization", "value": "Bearer YOUR_TWITTER_BEARER_TOKEN"}]},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"text\": \"{{ $json.content }}\" }",
+        "options": {}
+      },
+      "id": "twitter-post",
+      "name": "Post to Twitter (Add API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1104, 192],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-SITE.com/wp-json/wp/v2/posts",
+        "sendHeaders": true,
+        "headerParameters": {"parameters": [{"name": "Authorization", "value": "Basic YOUR_APP_PASSWORD"}]},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"title\": \"{{ $json.title }}\", \"content\": \"{{ $json.content }}\", \"status\": \"draft\" }",
+        "options": {}
+      },
+      "id": "wordpress-post",
+      "name": "Create WordPress Post (Add API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1104, 368],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "sendHeaders": true,
+        "headerParameters": {"parameters": [{"name": "Authorization", "value": "Bearer YOUR_LINKEDIN_TOKEN"}, {"name": "X-Restli-Protocol-Version", "value": "2.0.0"}]},
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"author\": \"urn:li:person:YOUR_PERSON_ID\", \"lifecycleState\": \"PUBLISHED\", \"specificContent\": { \"com.linkedin.ugc.ShareContent\": { \"shareCommentary\": { \"text\": \"{{ $json.content }}\" }, \"shareMediaCategory\": \"NONE\" } }, \"visibility\": { \"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\" } }",
+        "options": {}
+      },
+      "id": "linkedin-post",
+      "name": "Post to LinkedIn (Add API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1088, 576],
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "AAA Webhook": {"main": [[{"node": "Get Approved Content", "type": "main", "index": 0}]]},
+    "Get Approved Content": {"main": [[{"node": "Is Email?", "type": "main", "index": 0}]]},
+    "Is Email?": {"main": [[{"node": "Prep Email Data", "type": "main", "index": 0}], [{"node": "Prep Other Data", "type": "main", "index": 0}]]},
+    "Prep Email Data": {"main": [[{"node": "Convert to HTML", "type": "main", "index": 0}]]},
+    "Convert to HTML": {"main": [[{"node": "Create Kit Draft", "type": "main", "index": 0}]]},
+    "Create Kit Draft": {"main": [[{"node": "Add Record ID", "type": "main", "index": 0}]]},
+    "Add Record ID": {"main": [[{"node": "Mark Email Published", "type": "main", "index": 0}]]},
+    "Prep Other Data": {"main": [[{"node": "Route by Platform", "type": "main", "index": 0}]]},
+    "Route by Platform": {"main": [[{"node": "Post to Twitter (Add API)", "type": "main", "index": 0}], [{"node": "Create WordPress Post (Add API)", "type": "main", "index": 0}], [{"node": "Post to LinkedIn (Add API)", "type": "main", "index": 0}]]}
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
