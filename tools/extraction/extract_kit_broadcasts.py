@@ -3,10 +3,21 @@
 Extract all broadcast emails from Kit campaigns
 """
 import json
+import os
 from playwright.sync_api import sync_playwright
 
-def extract_kit_broadcasts(campaigns_url="https://app.kit.com/campaigns", email="4zjlloyd@gmail.com", password="[REDACTED]"):
-    """Extract all broadcast emails with subjects and content"""
+def extract_kit_broadcasts(campaigns_url="https://app.kit.com/campaigns", email=None, password=None):
+    """Extract all broadcast emails with subjects and content
+
+    Credentials should be passed as arguments or set as environment variables:
+    - KIT_EMAIL
+    - KIT_PASSWORD
+    """
+    email = email or os.environ.get("KIT_EMAIL")
+    password = password or os.environ.get("KIT_PASSWORD")
+
+    if not email or not password:
+        raise ValueError("Kit credentials required. Set KIT_EMAIL and KIT_PASSWORD environment variables.")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(

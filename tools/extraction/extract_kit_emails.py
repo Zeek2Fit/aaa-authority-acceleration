@@ -3,11 +3,22 @@
 Extract emails from Kit sequence using Brave browser
 """
 import json
+import os
 import sys
 from playwright.sync_api import sync_playwright
 
-def extract_kit_emails(sequence_url, email="4zjlloyd@gmail.com", password="[REDACTED]"):
-    """Extract all emails from a Kit sequence"""
+def extract_kit_emails(sequence_url, email=None, password=None):
+    """Extract all emails from a Kit sequence
+
+    Credentials should be passed as arguments or set as environment variables:
+    - KIT_EMAIL
+    - KIT_PASSWORD
+    """
+    email = email or os.environ.get("KIT_EMAIL")
+    password = password or os.environ.get("KIT_PASSWORD")
+
+    if not email or not password:
+        raise ValueError("Kit credentials required. Set KIT_EMAIL and KIT_PASSWORD environment variables.")
 
     with sync_playwright() as p:
         # Launch Brave browser
