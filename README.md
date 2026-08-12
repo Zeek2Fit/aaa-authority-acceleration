@@ -1,3 +1,5 @@
+
+
 # AAA Authority Acceleration System
 
 > **Authentic AI-Assisted Authorship:** Turn one brand interview into 12+ months of content that's 90-95% indistinguishable from the original creator.
@@ -39,7 +41,7 @@ Most AI content fails because:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Zeek2Fit/aaa-authority-acceleration.git
+git clone https://github.com/zach-lloyd-dev/aaa-authority-acceleration.git
 cd aaa-authority-acceleration
 
 # Copy skills and commands to your Claude Code environment
